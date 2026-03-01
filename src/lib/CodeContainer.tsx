@@ -298,9 +298,10 @@ export function CodeContainer({
     padding: "8px 12px",
     backgroundColor: headerColor || colors.header,
     borderBottom: `1px solid ${colors.border}`,
-    // Dynamic border-radius: rounded when floating, flat when stuck
-    borderTopLeftRadius: stickyHeader ? (isStuck ? 0 : "8px") : undefined,
-    borderTopRightRadius: stickyHeader ? (isStuck ? 0 : "8px") : undefined,
+    // Always apply top border-radius (7px to fit inside 8px container - 1px border)
+    // For sticky: 0 when stuck, 7px when floating
+    borderTopLeftRadius: stickyHeader ? (isStuck ? 0 : "7px") : "7px",
+    borderTopRightRadius: stickyHeader ? (isStuck ? 0 : "7px") : "7px",
     ...(stickyHeader && {
       position: "sticky",
       top: stickyTop,
@@ -356,8 +357,14 @@ export function CodeContainer({
     margin: 0,
     padding: "16px",
     overflow: "auto",
-    borderBottomLeftRadius: stickyHeader ? "8px" : undefined,
-    borderBottomRightRadius: stickyHeader ? "8px" : undefined,
+    // Always apply bottom border-radius (7px to fit inside 8px container - 1px border)
+    borderBottomLeftRadius: "7px",
+    borderBottomRightRadius: "7px",
+    // Apply top radius when no header is shown
+    ...(!shouldShowHeader && {
+      borderTopLeftRadius: "7px",
+      borderTopRightRadius: "7px",
+    }),
     // Sticky: height constraints here for internal scrolling
     ...(stickyHeader && {
       height: styleHeight,

@@ -1,1 +1,1 @@
-export { BxpCode, type BxpCodeProps } from "./BxpCode";
+export { BxpCode, type BxpCodeProps } from "./lib/BxpCode";
