@@ -16,6 +16,16 @@
     "noUnusedParameters": false,
     "erasableSyntaxOnly": true
   },
-  "include": ["src/index.ts", "src/BxpCode.tsx", "src/CodeContainer.tsx"],
-  "exclude": ["src/App.tsx", "src/main.tsx"]
+  "include": [
+    "src/index.ts",
+    "src/lib/BxpCode.tsx",
+    "src/lib/CodeContainer.tsx"
+  ],
+  "exclude": [
+    "src/App.tsx",
+    "src/main.tsx",
+    "src/components/**",
+    "src/stories/**",
+    "src/docs/**"
+  ]
 }
