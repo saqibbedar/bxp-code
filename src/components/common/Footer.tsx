@@ -2,6 +2,8 @@
  * Footer component for bxp-code documentation landing page.
  */
 
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
@@ -74,9 +76,9 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#examples" style={styles.link}>
+                <Link to="/examples" style={styles.link}>
                   Examples
-                </a>
+                </Link>
               </li>
               <li>
                 <a

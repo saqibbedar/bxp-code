@@ -2,31 +2,33 @@
  * Header component for bxp-code documentation landing page.
  */
 
+import { Link } from "react-router-dom";
+
 const Header = () => {
   return (
     <header style={styles.header}>
       <div style={styles.container}>
         {/* Logo */}
-        <a href="/" style={styles.logoLink}>
+        <Link to="/" style={styles.logoLink}>
           <img src="/logo.svg" alt="bxp-code" style={styles.logoImg} />
-        </a>
+        </Link>
 
         {/* Navigation */}
         <nav style={styles.nav} className="header-nav">
           <a
-            href="#features"
+            href="/#features"
             style={styles.navLink}
             className="header-nav-links"
           >
             Features
           </a>
-          <a
-            href="#examples"
+          <Link
+            to="/examples"
             style={styles.navLink}
             className="header-nav-links"
           >
             Examples
-          </a>
+          </Link>
           <a
             href="https://github.com/saqibbedar/bxp-code"
             target="_blank"

@@ -1,18 +1,25 @@
 /**
- * App - bxp-code documentation landing page.
+ * App - bxp-code documentation landing page with routing.
  */
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import CoverPage from "./components/ui/CoverPage";
+import ExamplesPage from "./components/ui/ExamplesPage";
 
 const App = () => {
   return (
-    <div style={styles.app}>
-      <Header />
-      <CoverPage />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <div style={styles.app}>
+        <Header />
+        <Routes>
+          <Route path="/" element={<CoverPage />} />
+          <Route path="/examples" element={<ExamplesPage />} />
+        </Routes>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 };
 

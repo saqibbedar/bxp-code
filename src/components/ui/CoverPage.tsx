@@ -3,6 +3,8 @@
  */
 
 import { BxpCode } from "../../lib/BxpCode";
+import { BxpCodeTabs } from "../../lib/BxpCodeTabs";
+import { Link } from "react-router-dom";
 
 const CoverPage = () => {
   return (
@@ -126,7 +128,7 @@ const CoverPage = () => {
         </p>
 
         <div style={styles.examplesGrid} className="examples-grid">
-          {/* Example 1: Dark Theme */}
+          {/* Dark Theme */}
           <div style={styles.exampleCard}>
             <h4 style={styles.exampleTitle}>Dark Theme</h4>
             <BxpCode
@@ -138,7 +140,7 @@ const CoverPage = () => {
             />
           </div>
 
-          {/* Example 2: Light Theme */}
+          {/* Light Theme */}
           <div style={styles.exampleCard}>
             <h4 style={styles.exampleTitle}>Light Theme</h4>
             <BxpCode
@@ -150,7 +152,7 @@ const CoverPage = () => {
             />
           </div>
 
-          {/* Example 3: Minimal */}
+          {/* Minimal */}
           <div style={styles.exampleCard}>
             <h4 style={styles.exampleTitle}>Minimal Mode</h4>
             <BxpCode
@@ -161,7 +163,7 @@ const CoverPage = () => {
             />
           </div>
 
-          {/* Example 4: Custom Colors */}
+          {/* Custom Colors */}
           <div style={styles.exampleCard}>
             <h4 style={styles.exampleTitle}>Custom Colors</h4>
             <BxpCode
@@ -174,6 +176,30 @@ const CoverPage = () => {
               showLineNumbers
             />
           </div>
+
+          {/* Multi-Tab */}
+          <div style={styles.exampleCard}>
+            <h4 style={styles.exampleTitle}>Multi-Tab</h4>
+            <BxpCodeTabs
+              tabs={[
+                { lang: "bash", label: "npm", code: "npm install bxp-code" },
+                { lang: "bash", label: "pnpm", code: "pnpm add bxp-code" },
+                { lang: "bash", label: "yarn", code: "yarn add bxp-code" },
+                { lang: "bash", label: "bun", code: "bun add bxp-code" },
+              ]}
+              theme="dark"
+            />
+          </div>
+        </div>
+
+        {/* More Examples Button */}
+        <div style={styles.moreExamples}>
+          <Link to="/examples" style={styles.moreExamplesButton}>
+            More Examples →
+          </Link>
+          <p style={styles.moreExamplesHint}>
+            URL fetch, file upload, custom themes, and more interactive demos
+          </p>
         </div>
       </section>
 
@@ -269,13 +295,14 @@ function App() {
 }`;
 
 const darkThemeExample = `export async function fetchData<T>(
-  url: string
+  url: string,
+  options?: RequestInit
 ): Promise<T> {
   const response = await fetch(url);
   if (!response.ok) {
-    throw new Error('Network error');
+    throw new Error(\`HTTP \$\{response.status\}\`);
   }
-  return response.json();
+  return response.json() as Promise<T>;
 }`;
 
 const lightThemeExample = `module.exports = {
@@ -294,8 +321,14 @@ const minimalExample = `def quicksort(arr):
         return arr
     pivot = arr[len(arr) // 2]
     left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
     right = [x for x in arr if x > pivot]
-    return quicksort(left) + [pivot] + quicksort(right)`;
+    return quicksort(left) + middle + quicksort(right)
+
+def binary_search(arr, target):
+    low, high = 0, len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2`;
 
 const customColorsExample = `.button {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -307,9 +340,8 @@ const customColorsExample = `.button {
   transition: transform 0.2s ease;
 }
 
-.button:hover {
-  transform: translateY(-2px);
-}`;
+
+`;
 
 const gettingStartedExample = `import { BxpCode } from 'bxp-code';
 
@@ -611,6 +643,28 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 600,
     color: "rgba(255, 255, 255, 0.8)",
     margin: 0,
+  },
+
+  // More examples CTA
+  moreExamples: {
+    textAlign: "center",
+    marginTop: "48px",
+  },
+  moreExamplesButton: {
+    display: "inline-block",
+    backgroundColor: "#e06b74",
+    color: "#fff",
+    padding: "14px 32px",
+    borderRadius: "8px",
+    textDecoration: "none",
+    fontSize: "16px",
+    fontWeight: 600,
+    transition: "transform 0.2s, box-shadow 0.2s",
+  },
+  moreExamplesHint: {
+    fontSize: "14px",
+    color: "rgba(255, 255, 255, 0.4)",
+    marginTop: "12px",
   },
 
   // Getting Started Steps
