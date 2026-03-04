@@ -1,7 +1,7 @@
 {
   "name": "bxp-code",
   "version": "1.0.0",
-  "description": "A React component for displaying code snippets with syntax highlighting, Prettier formatting, and customization options.",
+  "description": "Drop-in React code blocks with Shiki highlighting, Prettier formatting, and zero config.",
   "author": {
     "name": "Saqib Bedar"
   },
@@ -28,16 +28,27 @@
   "sideEffects": false,
   "keywords": [
     "react",
-    "code",
+    "react-component",
+    "code-block",
+    "code-highlight",
     "syntax-highlighting",
     "shiki",
     "prettier",
-    "code-block",
+    "code-formatting",
+    "dark-theme",
+    "light-theme",
     "typescript",
-    "javascript"
+    "javascript",
+    "code-viewer",
+    "code-snippet",
+    "copy-to-clipboard",
+    "line-numbers",
+    "tabs",
+    "zero-config"
   ],
   "scripts": {
     "dev": "vite",
+    "host": "vite --host",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
