@@ -22,8 +22,7 @@ export default defineConfig({
       {
         rel: "icon",
         type: "image/png",
-        sizes: "512x512",
-        href: "/bxp-code/logo-512x512.png",
+        href: "/bxp-code/logo.svg",
       },
     ],
   ],
@@ -34,7 +33,7 @@ export default defineConfig({
     nav: [
       { text: "Guide", link: "/guide/getting-started" },
       { text: "API", link: "/api/" },
-      { text: "Playground", link: "/bxp-code/playground/", target: "_blank" },
+      { text: "Playground", link: "https://github.com/saqibbedar/bxp-code/playground", target: "_blank" },
       {
         text: "Blog",
         items: [
@@ -45,10 +44,10 @@ export default defineConfig({
         ],
       },
       {
-        text: "v1.0.0",
+        text: "v1.0.1",
         items: [
           {
-            text: "v1.0.0 (current)",
+            text: "v1.0.1 (current)",
             link: "/",
           },
           {
