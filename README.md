@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/logo.svg" alt="bxp-code" height="60" />
+  <img src="https://raw.githubusercontent.com/saqibbedar/bxp-code/main/public/logo.svg" alt="bxp-code" height="60" />
 </p>
 
 <h3 align="center">Drop-in React code blocks with Shiki highlighting, Prettier formatting, and zero config.</h3>
@@ -91,12 +91,14 @@ function App() {
 Render a single highlighted + formatted code block.
 
 **Input (provide one):**
+
 - `code?: string`
 - `file?: File`
 - `url?: string`  
-Priority: `code` > `file` > `url`
+  Priority: `code` > `file` > `url`
 
 **Common props:**
+
 - `lang?: string` (auto-detect)
 - `fileName?: string` (auto-detect)
 - `theme?: "dark" | "light"` (default `"dark"`)
@@ -119,6 +121,7 @@ Render multiple code blocks inside a tabbed container.
 Each tab supports: `lang` (required), `label?`, and one of `code?` / `file?` / `url?` (+ optional `fileName?`).
 
 **Common props:**
+
 - `tabs: BxpCodeTab[]` (**required**)
 - `theme?: "dark" | "light"` (default `"dark"`)
 - `showLineNumbers?: boolean` (default `true`)

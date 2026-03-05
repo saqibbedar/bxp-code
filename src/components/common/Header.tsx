@@ -10,7 +10,7 @@ const Header = () => {
       <div style={styles.container}>
         {/* Logo */}
         <Link to="/" style={styles.logoLink}>
-          <img src="/logo.svg" alt="bxp-code" style={styles.logoImg} />
+          <img src="https://raw.githubusercontent.com/saqibbedar/bxp-code/refs/heads/main/public/logo.svg" alt="bxp-code" style={styles.logoImg} />
         </Link>
 
         {/* Navigation */}

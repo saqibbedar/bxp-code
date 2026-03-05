@@ -1,11 +1,19 @@
 {
   "name": "bxp-code",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Drop-in React code blocks with Shiki highlighting, Prettier formatting, and zero config.",
   "author": {
     "name": "Saqib Bedar"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saqibbedar/bxp-code.git"
+  },
+  "homepage": "https://saqibbedar.github.io/bxp-code/",
+  "bugs": {
+    "url": "https://github.com/saqibbedar/bxp-code/issues"
+  },
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.js",

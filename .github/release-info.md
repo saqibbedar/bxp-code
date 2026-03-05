@@ -1,14 +1,14 @@
 # Current Release
 
-version: 1.0.0
+version: 1.0.1
 
 ## Title
 
-bxp-code v1.0.0
+bxp-code v1.0.1
 
 ## Description
 
-**bxp-code v1.0.0** — drop-in React code blocks with Shiki highlighting, Prettier formatting, and zero config.
+**bxp-code v1.0.1** — Fix broken logo, add repository URLs, and fix playground navigation.
 
 ### Highlights
 
@@ -27,3 +27,4 @@ bxp-code v1.0.0
 - Docs: https://saqibbedar.github.io/bxp-code/
 - Playground: https://saqibbedar.github.io/bxp-code/playground/
 - GitHub Releases: https://github.com/saqibbedar/bxp-code/releases
+- NPM Package: https://www.npmjs.com/package/bxp-code

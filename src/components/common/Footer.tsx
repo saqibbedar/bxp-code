@@ -15,7 +15,7 @@ const Footer = () => {
           {/* Brand Column */}
           <div style={styles.brandColumn} className="footer-brand">
             <div style={styles.logoWrapper}>
-              <img src="/logo.svg" alt="bxp-code" style={styles.logoImg} />
+              <img src="https://raw.githubusercontent.com/saqibbedar/bxp-code/refs/heads/main/public/logo.svg" alt="bxp-code" style={styles.logoImg} />
             </div>
             <p style={styles.description} className="footer-description">
               Drop-in React code blocks with Shiki highlighting, Prettier
