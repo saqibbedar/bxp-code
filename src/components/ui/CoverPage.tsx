@@ -292,7 +292,7 @@ const darkThemeExample = `export async function fetchData<T>(
 ): Promise<T> {
   const response = await fetch(url);
   if (!response.ok) {
-    throw new Error(\`HTTP \$\{response.status\}\`);
+    throw new Error(\`HTTP $\{response.status}\`);
   }
   return response.json() as Promise<T>;
 }`;
