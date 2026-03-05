@@ -56,7 +56,7 @@ export default defineConfig({
           },
           {
             text: "Contributing",
-            link: "https://www.github.com/saqibbedar/bxp-code/CONTRIBUTING.md",
+            link: "https://github.com/saqibbedar/bxp-code/blob/main/CONTRIBUTING.md",
           },
           // {
           //   items: [
