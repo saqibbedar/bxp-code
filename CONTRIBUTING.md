@@ -57,7 +57,7 @@ Install dependencies:
 npm install
 ```
 
-Start the Vite dev server (landing page + interactive examples):
+Start the Vite dev server (playground page):
 
 ```bash
 npm run dev
@@ -79,7 +79,7 @@ bxp-code/
 │   │   ├── BxpCodeTabs.tsx   # Multi-tab code block component
 │   │   ├── CodeContainer.tsx # Shared container with sticky headers
 │   │   └── themes/           # Custom Shiki themes (bxp-dark, bxp-light)
-│   ├── components/           # Landing page & examples (not published)
+│   ├── components/           # Playground page
 │   │   ├── ui/               # CoverPage, ExamplesPage
 │   │   └── common/           # Header, Footer
 │   ├── App.tsx               # Router setup
@@ -98,30 +98,31 @@ bxp-code/
 
 ### Key directories
 
-| Directory         | Purpose                                                  |
-| ----------------- | -------------------------------------------------------- |
-| `src/lib/`        | Core library code — this is what gets published to npm   |
-| `src/components/` | Landing page and interactive examples (development only) |
-| `docs/`           | VitePress documentation site                             |
+| Directory         | Purpose                                                   |
+| ----------------- | --------------------------------------------------------- |
+| `src/lib/`        | Core library code — this is what gets published to npm    |
+| `src/components/` | Playground page & interactive examples                    |
+| `docs/`           | VitePress documentation site                              |
 
 ## Development Workflow
 
 ### Available Scripts
 
-| Command                | Description                                           |
-| ---------------------- | ----------------------------------------------------- |
-| `npm run dev`          | Start Vite dev server for the landing page            |
-| `npm run build`        | Type-check with `tsc` and build the library with Vite |
-| `npm run lint`         | Run ESLint across the project                         |
-| `npm run docs`         | Start VitePress dev server for documentation          |
-| `npm run docs:build`   | Build the VitePress documentation site                |
-| `npm run docs:preview` | Preview the built documentation site                  |
+| Command                | Description                                             |
+| ---------------------- | ------------------------------------------------------- |
+| `npm run dev`          | Start Vite dev server for the Playground page           |
+| `npm run host`         | Start Vite dev server for the Playground page (mobile)  |
+| `npm run build`        | Type-check with `tsc` and build the library with Vite   |
+| `npm run lint`         | Run ESLint across the project                           |
+| `npm run docs`         | Start VitePress dev server for documentation            |
+| `npm run docs:build`   | Build the VitePress documentation site                  |
+| `npm run docs:preview` | Preview the built documentation site                    |
 
 ### Making Changes
 
 1. **Library code** (`src/lib/`): Changes here affect the published package. Make sure to run `npm run build` to verify the build succeeds.
 2. **Documentation** (`docs/`): Run `npm run docs` to preview changes locally.
-3. **Landing page** (`src/components/`): Run `npm run dev` to see changes in the browser.
+3. **Playground** (`src/components/`): Run `npm run dev` to see changes in the browser.
 
 ### Testing Your Changes
 
@@ -158,7 +159,7 @@ npm run docs:build
 
 5. **Update documentation** if your change affects the public API or user-facing behavior.
 
-6. **Add screenshots** for UI changes to the landing page or examples.
+6. **Add screenshots** for UI changes to the playground.
 
 ## Reporting Issues
 
