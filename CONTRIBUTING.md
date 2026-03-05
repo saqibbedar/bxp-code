@@ -98,25 +98,27 @@ bxp-code/
 
 ### Key directories
 
-| Directory         | Purpose                                                   |
-| ----------------- | --------------------------------------------------------- |
-| `src/lib/`        | Core library code — this is what gets published to npm    |
-| `src/components/` | Playground page & interactive examples                    |
-| `docs/`           | VitePress documentation site                              |
+| Directory         | Purpose                                                |
+| ----------------- | ------------------------------------------------------ |
+| `src/lib/`        | Core library code — this is what gets published to npm |
+| `src/components/` | Playground page & interactive examples                 |
+| `docs/`           | VitePress documentation site                           |
 
 ## Development Workflow
 
 ### Available Scripts
 
-| Command                | Description                                             |
-| ---------------------- | ------------------------------------------------------- |
-| `npm run dev`          | Start Vite dev server for the Playground page           |
-| `npm run host`         | Start Vite dev server for the Playground page (mobile)  |
-| `npm run build`        | Type-check with `tsc` and build the library with Vite   |
-| `npm run lint`         | Run ESLint across the project                           |
-| `npm run docs`         | Start VitePress dev server for documentation            |
-| `npm run docs:build`   | Build the VitePress documentation site                  |
-| `npm run docs:preview` | Preview the built documentation site                    |
+| Command                      | Description                                                  |
+| ---------------------------- | ------------------------------------------------------------ |
+| `npm run dev`                | Start Vite dev server for the Playground page                |
+| `npm run host`               | Start Vite dev server for the Playground page (mobile)       |
+| `npm run build`              | Type-check with `tsc` and build the library with Vite        |
+| `npm run lint`               | Run ESLint across the project                                |
+| `npm run docs`               | Start VitePress dev server for documentation                 |
+| `npm run docs:build`         | Build the VitePress documentation site                       |
+| `npm run docs:preview`       | Preview the built documentation site                         |
+| `npm run playground:build`   | Build the playground demo app (outputs to `dist-playground`) |
+| `npm run playground:preview` | Preview the built playground locally on port 4174            |
 
 ### Making Changes
 

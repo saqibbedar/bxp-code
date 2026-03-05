@@ -10,7 +10,7 @@ import ExamplesPage from "./components/ui/ExamplesPage";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <div style={styles.app}>
         <Header />
         <Routes>

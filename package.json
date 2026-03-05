@@ -55,7 +55,9 @@
     "prepublishOnly": "npm run build",
     "docs": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "playground:build": "vite build --config vite.playground.config.ts",
+    "playground:preview": "vite preview --config vite.playground.config.ts --port 4174"
   },
   "peerDependencies": {
     "react": ">=17.0.0",
