@@ -33,7 +33,11 @@ export default defineConfig({
     nav: [
       { text: "Guide", link: "/guide/getting-started" },
       { text: "API", link: "/api/" },
-      { text: "Playground", link: "https://github.com/saqibbedar/bxp-code/playground", target: "_blank" },
+      {
+        text: "Playground",
+        link: "https://saqibbedar.github.io/bxp-code/playground",
+        target: "_blank",
+      },
       {
         text: "Blog",
         items: [
