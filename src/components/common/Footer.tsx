@@ -18,8 +18,8 @@ const Footer = () => {
               <img src="/logo.svg" alt="bxp-code" style={styles.logoImg} />
             </div>
             <p style={styles.description} className="footer-description">
-              Beautiful syntax highlighting for React applications. Built with
-              Shiki and Prettier for the best developer experience.
+              Drop-in React code blocks with Shiki highlighting, Prettier
+              formatting, and zero config.
             </p>
             <div style={styles.socialLinks} className="footer-social">
               <a

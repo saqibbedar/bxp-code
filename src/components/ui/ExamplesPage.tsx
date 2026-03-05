@@ -2,7 +2,7 @@
  * ExamplesPage - Dedicated interactive examples page for bxp-code.
  */
 
-import { useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { BxpCode } from "../../lib/BxpCode";
 import { BxpCodeTabs } from "../../lib/BxpCodeTabs";
 
@@ -34,14 +34,27 @@ const ExamplesPage = () => {
     setTabFile(e.target.files?.[0] ?? null);
   };
 
+  useEffect(() => {
+    // scroll to when navigating from header link
+    const hash = window.location.hash;
+    if (hash === "#examples") {
+      setTimeout(() => {
+        const el = document.querySelector(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+    }
+  }, []);
+
   return (
     <main style={styles.main}>
       {/* Page Header */}
       <section style={styles.pageHeader}>
         <h1 style={styles.pageTitle}>Interactive Examples</h1>
         <p style={styles.pageSubtitle}>
-          Try every feature of bxp-code right here — edit URLs, upload files,
-          and switch between tabs
+          Explore every feature of bxp-code — edit URLs, upload files, switch
+          themes, and customize colors
         </p>
       </section>
 
@@ -49,10 +62,11 @@ const ExamplesPage = () => {
       <section style={styles.section}>
         <h2 style={styles.sectionTitle}>Code String</h2>
         <p style={styles.sectionSubtitle}>
-          The simplest way — pass a code string directly
+          The simplest way — pass a code string directly. Prettier formats JS,
+          TS, HTML, CSS, and JSON automatically.
         </p>
 
-        <div style={styles.grid}>
+        <div style={styles.grid} className="examples-grid">
           <div style={styles.card}>
             <h4 style={styles.cardTitle}>Dark Theme</h4>
             <BxpCode
@@ -106,7 +120,8 @@ const ExamplesPage = () => {
       <section style={styles.section}>
         <h2 style={styles.sectionTitle}>Fetch from URL</h2>
         <p style={styles.sectionSubtitle}>
-          Load and highlight any raw source file — try changing the URL below
+          Load and highlight any raw source file — language and filename are
+          auto-detected from the URL
         </p>
 
         <div style={styles.card}>
@@ -154,8 +169,8 @@ const ExamplesPage = () => {
       <section style={styles.section}>
         <h2 style={styles.sectionTitle}>File Upload</h2>
         <p style={styles.sectionSubtitle}>
-          Pick any source file from your machine — language is detected from the
-          extension
+          Pick any source file from your machine — language is auto-detected
+          from the file extension
         </p>
 
         <div style={styles.card}>
@@ -187,8 +202,8 @@ const ExamplesPage = () => {
       <section style={styles.section}>
         <h2 style={styles.sectionTitle}>Multi-Tab Code Blocks</h2>
         <p style={styles.sectionSubtitle}>
-          Show multiple languages or commands in a single tabbed container using{" "}
-          <code style={styles.inlineCode}>BxpCodeTabs</code>
+          Display multiple languages or commands in a single tabbed container
+          using <code style={styles.inlineCode}>BxpCodeTabs</code>
         </p>
 
         {/* Package managers */}
@@ -331,7 +346,7 @@ const ExamplesPage = () => {
         <h2 style={styles.sectionTitle}>Custom Themed Tabs</h2>
         <p style={styles.sectionSubtitle}>
           Override every color — active tab, indicator, border, header, and
-          background
+          background. Match any design system.
         </p>
 
         <div style={styles.card}>
@@ -578,7 +593,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
 
   section: {
-    maxWidth: "900px",
+    maxWidth: "1200px",
     margin: "0 auto",
     padding: "60px 24px 0",
   },
@@ -596,7 +611,7 @@ const styles: Record<string, React.CSSProperties> = {
 
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(2, 1fr)",
+    gridTemplateColumns: "repeat(2, minmax(340px, 1fr))",
     gap: "24px",
   },
   card: {
@@ -604,7 +619,8 @@ const styles: Record<string, React.CSSProperties> = {
     border: "1px solid rgba(255, 255, 255, 0.08)",
     borderRadius: "12px",
     padding: "24px",
-    overflow: "clip",
+    minWidth: 0,
+    overflow: "hidden",
   },
   cardTitle: {
     fontSize: "14px",

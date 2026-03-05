@@ -24,9 +24,9 @@ const CoverPage = () => {
           </h1>
 
           <p style={styles.subtitle} className="hero-subtitle">
-            A powerful syntax highlighting component with Shiki, automatic code
-            formatting with Prettier, dark/light themes, and zero configuration
-            required.
+            Drop-in React code blocks with Shiki highlighting, Prettier
+            formatting, and zero config. Dark and light themes, copy button,
+            line numbers — all built in.
           </p>
 
           <div style={styles.heroButtons} className="hero-buttons">
@@ -34,28 +34,27 @@ const CoverPage = () => {
               Get Started
             </a>
             <a
-              href="https://github.com/saqibbedar/bxp-code"
+              href="https://saqibbedar.github.io/bxp-code/"
               target="_blank"
               rel="noopener noreferrer"
               style={styles.secondaryButton}
             >
-              <GitHubIcon /> View on GitHub
+              <DocsIcon /> Documentation
             </a>
           </div>
 
           {/* Install Command */}
-          <div style={styles.installBox}>
-            <code style={styles.installCode}>npm install bxp-code</code>
-            <button
-              style={styles.copyButton}
-              onClick={() =>
-                navigator.clipboard.writeText("npm install bxp-code")
-              }
-              aria-label="Copy install command"
-            >
-              <CopyIcon />
-            </button>
-          </div>
+          <BxpCodeTabs
+            tabs={[
+              { lang: "bash", label: "npm", code: "npm install bxp-code" },
+              { lang: "bash", label: "pnpm", code: "pnpm add bxp-code" },
+              { lang: "bash", label: "yarn", code: "yarn add bxp-code" },
+              { lang: "bash", label: "bun", code: "bun add bxp-code" },
+            ]}
+            showLineNumbers={false}
+            theme="dark"
+            style={{ marginTop: "16px" }}
+          />
         </div>
 
         {/* Hero Code Example */}
@@ -72,35 +71,13 @@ const CoverPage = () => {
         </div>
       </section>
 
-      {/* Used By Section */}
-      <section style={styles.section} id="used-by">
-        <p style={styles.usedByLabel}>Trusted by developers at</p>
-        <div style={styles.usedByLogos} className="used-by-logos">
-          <span style={styles.companyLogo} className="company-logo">
-            Vercel
-          </span>
-          <span style={styles.companyLogo} className="company-logo">
-            Stripe
-          </span>
-          <span style={styles.companyLogo} className="company-logo">
-            GitHub
-          </span>
-          <span style={styles.companyLogo} className="company-logo">
-            Shopify
-          </span>
-          <span style={styles.companyLogo} className="company-logo">
-            Notion
-          </span>
-        </div>
-      </section>
-
       {/* Features Section */}
       <section style={styles.section} id="features">
         <h2 style={styles.sectionTitle} className="section-title">
           Why bxp-code?
         </h2>
         <p style={styles.sectionSubtitle} className="section-subtitle">
-          Everything you need for beautiful code presentation
+          Everything you need for production-ready code presentation
         </p>
 
         <div style={styles.featuresGrid} className="features-grid">
@@ -124,7 +101,7 @@ const CoverPage = () => {
           See it in Action
         </h2>
         <p style={styles.sectionSubtitle} className="section-subtitle">
-          Explore different configurations and use cases
+          Dark and light themes, custom colors, tabbed views, and more
         </p>
 
         <div style={styles.examplesGrid} className="examples-grid">
@@ -218,10 +195,20 @@ const CoverPage = () => {
             <div style={styles.stepNumber} className="step-number">
               1
             </div>
-            <div style={styles.stepContent}>
+            {/* <div style={styles.stepContent}>
               <h4 style={styles.stepTitle}>Install the package</h4>
               <BxpCode code="npm install bxp-code" lang="bash" theme="dark" />
-            </div>
+            </div> */}
+            <BxpCodeTabs
+              tabs={[
+                { lang: "bash", label: "npm", code: "npm install bxp-code" },
+                { lang: "bash", label: "pnpm", code: "pnpm add bxp-code" },
+                { lang: "bash", label: "yarn", code: "yarn add bxp-code" },
+                { lang: "bash", label: "bun", code: "bun add bxp-code" },
+              ]}
+              theme="dark"
+              style={styles.stepContent}
+            />
           </div>
 
           {/* Step 2 */}
@@ -251,7 +238,7 @@ const CoverPage = () => {
           Ready to elevate your code blocks?
         </h2>
         <p style={styles.ctaSubtitle} className="cta-subtitle">
-          Join thousands of developers using bxp-code
+          Install bxp-code and start shipping beautiful code in minutes
         </p>
         <div style={styles.ctaButtons} className="cta-buttons">
           <a
@@ -330,7 +317,8 @@ def binary_search(arr, target):
     while low <= high:
         mid = (low + high) // 2`;
 
-const customColorsExample = `.button {
+const customColorsExample = `/* Custom header and background colors with the dark theme */
+.button {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border: none;
   border-radius: 8px;
@@ -369,37 +357,39 @@ export default MyComponent;`;
 const features = [
   {
     icon: "🎨",
-    title: "Beautiful Themes",
+    title: "Dark & Light Themes",
     description:
-      "Dark and light themes out of the box, with support for custom color schemes.",
+      "Two built-in themes with full color customization — header, background, tabs, borders, and more.",
   },
   {
     icon: "✨",
-    title: "Auto Formatting",
+    title: "Prettier Built-In",
     description:
-      "Powered by Prettier - your code is automatically formatted for readability.",
+      "JS, TS, HTML, CSS, JSON, and Markdown are auto-formatted on render. No setup needed.",
   },
   {
     icon: "🚀",
-    title: "100+ Languages",
+    title: "Shiki Highlighting",
     description:
-      "Support for TypeScript, Python, Go, Rust, and many more via Shiki.",
+      "VS Code-grade syntax highlighting for 100+ languages via TextMate grammars.",
   },
   {
     icon: "📋",
     title: "Copy to Clipboard",
-    description: "One-click copy button with visual feedback for users.",
+    description:
+      "One-click copy button on every code block with instant visual feedback.",
   },
   {
     icon: "📁",
-    title: "File Input Support",
+    title: "Three Input Methods",
     description:
-      "Load code from File objects or URLs with auto language detection.",
+      "Pass a code string, a File object, or a URL — language and filename are auto-detected.",
   },
   {
     icon: "📌",
     title: "Sticky Headers",
-    description: "Pin file names while scrolling through long code blocks.",
+    description:
+      "Pin file names and tab bars while scrolling. Powered by overflow: clip for reliable behavior.",
   },
 ];
 
@@ -419,9 +409,20 @@ const GitHubIcon = () => (
   </svg>
 );
 
-const CopyIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+const DocsIcon = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    style={{ marginRight: "8px" }}
+  >
+    <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
+    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
   </svg>
 );
 
@@ -518,62 +519,6 @@ const styles: Record<string, React.CSSProperties> = {
     display: "inline-flex",
     alignItems: "center",
     transition: "border-color 0.2s",
-  },
-  installBox: {
-    display: "flex",
-    alignItems: "center",
-    gap: "12px",
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
-    border: "1px solid rgba(255, 255, 255, 0.1)",
-    borderRadius: "8px",
-    padding: "12px 16px",
-    width: "fit-content",
-    marginTop: "8px",
-  },
-  installCode: {
-    fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
-    fontSize: "14px",
-    color: "#e06b74",
-  },
-  copyButton: {
-    background: "none",
-    border: "none",
-    color: "rgba(255, 255, 255, 0.5)",
-    cursor: "pointer",
-    padding: "4px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  heroDemo: {
-    borderRadius: "12px",
-    // Use clip instead of hidden - clips content but doesn't break position: sticky
-    overflow: "clip",
-    boxShadow:
-      "0 20px 60px rgba(224, 107, 116, 0.15), 0 8px 24px rgba(0, 0, 0, 0.4)",
-    minWidth: 0, // Allow grid item to shrink below content size
-  },
-
-  // Used By Section
-  usedByLabel: {
-    textAlign: "center",
-    color: "rgba(255, 255, 255, 0.4)",
-    fontSize: "13px",
-    textTransform: "uppercase",
-    letterSpacing: "1px",
-    marginBottom: "24px",
-  },
-  usedByLogos: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "48px",
-    flexWrap: "wrap",
-  },
-  companyLogo: {
-    color: "rgba(255, 255, 255, 0.3)",
-    fontSize: "18px",
-    fontWeight: 600,
-    letterSpacing: "0.5px",
   },
 
   // Sections

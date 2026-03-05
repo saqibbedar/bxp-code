@@ -142,15 +142,6 @@ code {
     display: none !important;
   }
 
-  /* Used By section */
-  .used-by-logos {
-    gap: 24px !important;
-  }
-
-  .company-logo {
-    font-size: 14px !important;
-  }
-
   /* Features grid */
   .features-grid {
     grid-template-columns: 1fr !important;
@@ -158,6 +149,11 @@ code {
 
   .feature-card {
     padding: 24px !important;
+  }
+
+  /* Examples grid */
+  .examples-grid {
+    grid-template-columns: 1fr !important;
   }
 
   /* Section titles */
