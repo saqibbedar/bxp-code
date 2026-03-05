@@ -19,16 +19,15 @@
 
 ## Features
 
-- **Shiki Syntax Highlighting** — Accurate, TextMate-grammar-based highlighting for 100+ languages
-- **Prettier Auto-Formatting** — Code is automatically formatted on render
-- **Dark & Light Themes** — Built-in themes with full color customization
-- **Copy to Clipboard** — One-click copy with visual feedback
-- **Line Numbers** — Optional line number gutter
-- **Sticky Headers** — Pin file names while scrolling long blocks
-- **File & URL Input** — Load code from `File` objects or remote URLs
-- **Multi-Tab Code Blocks** — `BxpCodeTabs` for tabbed code containers
-- **Zero Config** — Works out of the box with sensible defaults
-- **TypeScript First** — Full type definitions included
+- **Shiki syntax highlighting** — TextMate-grammar-based highlighting for 100+ languages
+- **Prettier formatting on render** — Automatically formats code before display
+- **Dark & light themes** — Built-in themes with easy customization
+- **Copy to clipboard** — One-click copy with visual feedback
+- **Line numbers** — Optional gutter (`showLineNumbers`)
+- **Sticky headers** — Pin the header/tab bar while scrolling long blocks (`stickyHeader`)
+- **Multiple input methods** — Render from `code`, `File`, or remote `url`
+- **Tabbed code blocks** — `BxpCodeTabs` for multi-snippet containers
+- **TypeScript-first** — Full types exported for all public APIs
 
 ## Install
 
@@ -85,81 +84,68 @@ function App() {
 
 ## Components
 
+> Full API documentation lives in [`docs/api/index.md`](docs/api/index.md) and on the website: https://saqibbedar.github.io/bxp-code/bxp-code
+
 ### `BxpCode`
 
-The core component for rendering a single code block.
+Render a single highlighted + formatted code block.
 
-| Prop              | Type                     | Default  | Description                      |
-| ----------------- | ------------------------ | -------- | -------------------------------- |
-| `code`            | `string`                 | —        | Code string to highlight         |
-| `file`            | `File`                   | —        | File object from input/drag-drop |
-| `url`             | `string`                 | —        | URL to fetch code from           |
-| `lang`            | `string`                 | auto     | Language for highlighting        |
-| `fileName`        | `string`                 | auto     | File name displayed in header    |
-| `theme`           | `"dark" \| "light"`      | `"dark"` | Color theme                      |
-| `showHeader`      | `boolean`                | `true`   | Toggle header visibility         |
-| `showFileName`    | `boolean`                | `true`   | Toggle file name in header       |
-| `showLang`        | `boolean`                | `true`   | Toggle language badge            |
-| `showCopyButton`  | `boolean`                | `true`   | Toggle copy button               |
-| `showLineNumbers` | `boolean`                | `false`  | Toggle line numbers              |
-| `stickyHeader`    | `boolean`                | `false`  | Sticky header on scroll          |
-| `stickyTop`       | `number`                 | `0`      | Sticky offset in pixels          |
-| `headerColor`     | `string`                 | —        | Override header background       |
-| `backgroundColor` | `string`                 | —        | Override code background         |
-| `style`           | `CSSProperties`          | —        | Additional container styles      |
-| `className`       | `string`                 | —        | Additional CSS class             |
-| `onError`         | `(error: Error) => void` | —        | Error callback                   |
+**Input (provide one):**
+- `code?: string`
+- `file?: File`
+- `url?: string`  
+Priority: `code` > `file` > `url`
+
+**Common props:**
+- `lang?: string` (auto-detect)
+- `fileName?: string` (auto-detect)
+- `theme?: "dark" | "light"` (default `"dark"`)
+- `showHeader?: boolean` (default `true`)
+- `showCopyButton?: boolean` (default `true`)
+- `showLineNumbers?: boolean` (default `true`)
+- `stickyHeader?: boolean` (default `false`)
+- `stickyTop?: number` (default `0`)
+- `headerColor?: string`
+- `backgroundColor?: string`
+- `className?: string`
+- `style?: CSSProperties`
+- `onError?: (error: Error) => void`
 
 ### `BxpCodeTabs`
 
-Multi-tab code block component for showing multiple code snippets in tabs.
+Render multiple code blocks inside a tabbed container.
 
-| Prop                 | Type                     | Default      | Description                 |
-| -------------------- | ------------------------ | ------------ | --------------------------- |
-| `tabs`               | `BxpCodeTab[]`           | **required** | Array of tab configurations |
-| `theme`              | `"dark" \| "light"`      | `"dark"`     | Color theme                 |
-| `showLineNumbers`    | `boolean`                | `false`      | Toggle line numbers         |
-| `showCopyButton`     | `boolean`                | `true`       | Toggle copy button          |
-| `showHeader`         | `boolean`                | `true`       | Toggle tab bar visibility   |
-| `stickyHeader`       | `boolean`                | `false`      | Sticky tab bar on scroll    |
-| `stickyTop`          | `number`                 | `0`          | Sticky offset in pixels     |
-| `defaultTab`         | `number`                 | `0`          | Default active tab index    |
-| `headerColor`        | `string`                 | —            | Tab bar background color    |
-| `backgroundColor`    | `string`                 | —            | Code area background color  |
-| `borderColor`        | `string`                 | —            | Container border color      |
-| `tabActiveColor`     | `string`                 | —            | Active tab background       |
-| `tabActiveTextColor` | `string`                 | —            | Active tab text color       |
-| `tabTextColor`       | `string`                 | —            | Inactive tab text color     |
-| `tabIndicatorColor`  | `string`                 | —            | Active tab indicator color  |
-| `copyButtonColor`    | `string`                 | —            | Copy button background      |
-| `lineNumberColor`    | `string`                 | —            | Line number text color      |
-| `style`              | `CSSProperties`          | —            | Additional container styles |
-| `className`          | `string`                 | —            | Additional CSS class        |
-| `onError`            | `(error: Error) => void` | —            | Error callback              |
+**Tabs (`BxpCodeTab`)**
+Each tab supports: `lang` (required), `label?`, and one of `code?` / `file?` / `url?` (+ optional `fileName?`).
 
-#### `BxpCodeTab`
+**Common props:**
+- `tabs: BxpCodeTab[]` (**required**)
+- `theme?: "dark" | "light"` (default `"dark"`)
+- `showLineNumbers?: boolean` (default `true`)
+- `showCopyButton?: boolean` (default `true`)
+- `showHeader?: boolean` (default `true`)
+- `stickyHeader?: boolean` (default `false`)
+- `stickyTop?: number` (default `0`)
+- `defaultTab?: number` (default `0`)
+- `headerColor?: string`
+- `backgroundColor?: string`
+- `borderColor?: string`
+- `tabActiveColor?: string`
+- `tabActiveTextColor?: string`
+- `tabTextColor?: string`
+- `tabIndicatorColor?: string` (default `#e06b74`)
+- `copyButtonColor?: string`
+- `lineNumberColor?: string`
+- `className?: string`
+- `style?: CSSProperties`
+- `onError?: (error: Error) => void`
 
-| Prop       | Type     | Required | Description                    |
-| ---------- | -------- | -------- | ------------------------------ |
-| `lang`     | `string` | Yes      | Language identifier            |
-| `label`    | `string` | No       | Tab label (defaults to `lang`) |
-| `code`     | `string` | No       | Code string                    |
-| `file`     | `File`   | No       | File object                    |
-| `url`      | `string` | No       | URL to fetch code from         |
-| `fileName` | `string` | No       | Display file name              |
+## Contributing
 
-## Input Methods
+Contributions are welcome!
 
-```tsx
-// 1. Code string
-<BxpCode code="const x = 1;" lang="typescript" />
-
-// 2. File upload
-<BxpCode file={fileObject} />
-
-// 3. Remote URL
-<BxpCode url="https://raw.githubusercontent.com/user/repo/main/index.ts" />
-```
+- Please read: [CONTRIBUTING.md](./CONTRIBUTING.md) of Conduct
+- Please follow: [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
 
 ## License
 
