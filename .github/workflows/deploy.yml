@@ -1,0 +1,77 @@
+# ──────────────────────────────────────────────────────────────
+# Deploy docs + playground to GitHub Pages
+#
+# Trigger: Automatically on push to main when .github/deploy-info.md changes.
+#
+# Update the version in .github/deploy-info.md, push to main,
+# and a new deployment is triggered. This keeps a simple log of
+# every deployment version.
+# ──────────────────────────────────────────────────────────────
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    paths:
+      - ".github/deploy-info.md"
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # VitePress docs → docs/.vitepress/dist
+      - name: Build docs
+        run: npm run docs:build
+
+      # Playground → dist-playground
+      # --base must match the sub-path on GitHub Pages
+      - name: Build playground
+        run: npm run playground:build -- --base=/bxp-code/playground/
+
+      # Assemble a single artifact:
+      #   /           → docs
+      #   /playground → playground
+      - name: Assemble Pages artifact
+        run: |
+          mkdir -p .pages/playground
+          cp -R docs/.vitepress/dist/* .pages/
+          cp -R dist-playground/* .pages/playground/
+          cp .pages/playground/index.html .pages/playground/404.html
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .pages
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
