@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Troubleshooting
 
 Common issues and solutions when using bxp-code.
@@ -6,15 +10,15 @@ Common issues and solutions when using bxp-code.
 
 ### Peer Dependency Warnings
 
-If you see peer dependency warnings:
+If you see peer dependency warnings during installation:
 
 ```bash
 npm install bxp-code --legacy-peer-deps
 ```
 
-### TypeScript Errors
+### TypeScript Version
 
-Ensure you have the correct TypeScript version:
+bxp-code requires TypeScript 5.0+. If you see type errors:
 
 ```bash
 npm install typescript@^5.0.0 --save-dev
@@ -22,54 +26,84 @@ npm install typescript@^5.0.0 --save-dev
 
 ## Runtime Issues
 
-### Blank/Empty Output
+### Blank or Empty Output
 
-**Cause:** Shiki highlighter hasn't loaded yet.
+**Cause:** Shiki highlighter is still loading (it loads grammars asynchronously).
 
-**Solution:** The component handles loading internally. If issues persist, wrap in Suspense:
+**Solution:** This resolves automatically after the first render. The component handles the loading state internally. If you need to show a placeholder, wrap in React Suspense:
 
-```tsx
+::: code-group
+
+```tsx [React (TSX)]
 import { Suspense } from "react";
 import { BxpCode } from "bxp-code";
 
 <Suspense fallback={<div>Loading...</div>}>
-  <BxpCode code={code} lang="javascript" />
+  <BxpCode code={code} lang="javascript" theme="dark" />
 </Suspense>;
 ```
 
+```jsx [React (JSX)]
+import { Suspense } from "react";
+import { BxpCode } from "bxp-code";
+
+<Suspense fallback={<div>Loading...</div>}>
+  <BxpCode code={code} lang="javascript" theme="dark" />
+</Suspense>;
+```
+
+:::
+
 ### Unsupported Language
 
-**Cause:** Language not recognized by Shiki.
+**Cause:** Language identifier not recognized by Shiki.
 
-**Solution:** Check the [Shiki languages list](https://shiki.style/languages) for supported languages. Use `text` or `plaintext` as fallback.
+**Solution:** Check the [Shiki languages list](https://shiki.style/languages) for supported identifiers. Use `"text"` or `"plaintext"` as a fallback.
 
-### Formatting Errors
+### Formatting Doesn't Apply
 
-**Cause:** Prettier can't parse the code.
+**Cause:** Prettier doesn't support the language (e.g., Python, Rust, Go).
 
-**Solution:** Disable formatting for problematic code:
+**Solution:** This is expected behavior. Prettier supports JavaScript, TypeScript, JSX, TSX, HTML, CSS, SCSS, Less, JSON, Markdown, YAML, and GraphQL. For other languages, format your code before passing it to the component.
+
+### URL Fetch Fails
+
+**Cause:** CORS restrictions, network issues, or non-text response.
+
+**Solution:**
+
+1. Ensure the URL returns plain text (raw GitHub URLs work well)
+2. Check for CORS headers on the server
+3. Use the `onError` callback to handle failures gracefully:
 
 ```tsx
-<BxpCode code={problematicCode} lang="text" formatCode={false} />
+<BxpCode
+  url="https://example.com/code.ts"
+  theme="dark"
+  onError={(err) => console.error("Failed:", err.message)}
+/>
 ```
 
 ## Styling Issues
 
-### Code Overflow
+### Code Overflows Container
 
-**Solution:** Set a max width or use overflow styles:
+**Solution:** Wrap in a container with max-width, or use the `style` prop:
 
 ```tsx
-<div style={{ maxWidth: "100%", overflow: "auto" }}>
-  <BxpCode code={code} lang="javascript" />
-</div>
+<BxpCode
+  code={code}
+  lang="javascript"
+  theme="dark"
+  style={{ maxWidth: "100%" }}
+/>
 ```
 
-### Theme Not Applying
+### Theme Colors Not Applying
 
-**Cause:** CSS specificity conflicts.
+**Cause:** CSS specificity conflicts with your app's styles.
 
-**Solution:** Use the color props directly:
+**Solution:** Use the color props directly instead of CSS overrides:
 
 ```tsx
 <BxpCode
@@ -82,37 +116,51 @@ import { BxpCode } from "bxp-code";
 
 ### Sticky Header Not Working
 
-**Cause:** Parent container has `overflow: hidden`.
+**Cause:** A parent container has `overflow: hidden`, which breaks `position: sticky`.
 
-**Solution:** Ensure parent containers allow overflow:
+**Solution:** Replace `overflow: hidden` with `overflow: clip` on parent containers:
 
 ```css
-.parent-container {
-  overflow: visible;
+/* ❌ Breaks sticky */
+.parent {
+  overflow: hidden;
+}
+
+/* ✅ Works with sticky */
+.parent {
+  overflow: clip;
 }
 ```
 
-## Performance Issues
+→ See [Sticky Headers guide](/guide/sticky-headers) for details.
 
-### Slow Initial Load
+## Performance
 
-**Cause:** Shiki grammar loading.
+### Slow Initial Render
 
-**Solution:** Shiki loads grammars on-demand. First render may be slower.
+**Cause:** Shiki loads grammars on-demand the first time a language is used.
+
+**Solution:** This is a one-time cost per language. Subsequent renders of the same language are fast. For the best user experience, lazy-load code blocks that are below the fold.
 
 ### Large Code Blocks
 
-**Solution:** Use `maxHeight` to virtualize display:
+**Solution:** Use `maxHeight` via the `style` prop to limit visible area:
 
 ```tsx
-<BxpCode code={veryLongCode} lang="typescript" maxHeight="500px" />
+<BxpCode
+  code={veryLongCode}
+  lang="typescript"
+  theme="dark"
+  style={{ maxHeight: "500px" }}
+/>
 ```
 
 ## Still Having Issues?
 
-1. Check the [GitHub Issues](https://github.com/saqibbedar/bxp-code/issues)
+1. Check existing [GitHub Issues](https://github.com/saqibbedar/bxp-code/issues)
 2. Open a new issue with:
    - bxp-code version
    - React version
-   - Code sample reproducing the issue
+   - Minimal code sample reproducing the issue
    - Error messages (if any)
+3. Reach out via [GitHub Discussions](https://github.com/saqibbedar/bxp-code/discussions)

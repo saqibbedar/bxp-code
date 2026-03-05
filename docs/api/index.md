@@ -1,59 +1,80 @@
-# API Reference
+---
+outline: deep
+---
 
-Complete props reference for bxp-code components.
+# BxpCode — API Reference
 
-## BxpCode
+Complete props reference for the `BxpCode` component.
 
-### Input Props
+## Import
 
-Provide **one of** these to supply the code content:
+::: code-group
 
-| Prop   | Type     | Description                                     |
-| ------ | -------- | ----------------------------------------------- |
-| `code` | `string` | Code string to highlight                        |
-| `file` | `File`   | File object from `<input type="file">`          |
-| `url`  | `string` | URL to fetch code from (must return plain text) |
+```tsx [React (TSX)]
+import { BxpCode } from "bxp-code";
+import type { BxpCodeProps } from "bxp-code";
+```
 
-Priority: `code` > `file` > `url`.
+```jsx [React (JSX)]
+import { BxpCode } from "bxp-code";
+```
 
-### Display Props
+:::
 
-| Prop              | Type                | Default     | Description                        |
-| ----------------- | ------------------- | ----------- | ---------------------------------- |
-| `lang`            | `string`            | Auto-detect | Language for syntax highlighting   |
-| `fileName`        | `string`            | Auto-detect | File name shown in header          |
-| `theme`           | `"dark" \| "light"` | `"dark"`    | Color theme                        |
-| `showHeader`      | `boolean`           | `true`      | Show/hide the header bar           |
-| `showFileName`    | `boolean`           | `true`      | Show/hide file name in header      |
-| `showLang`        | `boolean`           | `true`      | Show/hide language badge in header |
-| `showCopyButton`  | `boolean`           | `true`      | Show/hide copy button              |
-| `showLineNumbers` | `boolean`           | `true`      | Show/hide line numbers             |
+## Input Props
 
-### Sticky Header Props
+Provide **one** of these to supply the code content. Priority: `code` > `file` > `url`.
 
-| Prop           | Type      | Default | Description                       |
-| -------------- | --------- | ------- | --------------------------------- |
-| `stickyHeader` | `boolean` | `false` | Pin header on scroll              |
-| `stickyTop`    | `number`  | `0`     | Offset from viewport top (pixels) |
+| Prop   | Type     | Description                                         |
+| ------ | -------- | --------------------------------------------------- |
+| `code` | `string` | Code string to highlight                            |
+| `file` | `File`   | File object from `<input type="file">` or drag-drop |
+| `url`  | `string` | URL to fetch code from (must return plain text)     |
 
-### Color Props
+## Display Props
 
-| Prop              | Type     | Default       | Description             |
-| ----------------- | -------- | ------------- | ----------------------- |
-| `headerColor`     | `string` | Theme default | Header background color |
-| `backgroundColor` | `string` | Theme default | Code area background    |
+| Prop              | Type                | Default     | Description                                                                                       |
+| ----------------- | ------------------- | ----------- | ------------------------------------------------------------------------------------------------- |
+| `lang`            | `string`            | Auto-detect | Language for syntax highlighting. Auto-detected from `fileName`, `file`, or `url` if not provided |
+| `fileName`        | `string`            | Auto-detect | File name shown in header. Auto-detected from `file` or `url` if not provided                     |
+| `theme`           | `"dark" \| "light"` | `"dark"`    | Color theme                                                                                       |
+| `showHeader`      | `boolean`           | `true`      | Show/hide the entire header bar                                                                   |
+| `showFileName`    | `boolean`           | `true`      | Show/hide file name in header                                                                     |
+| `showLang`        | `boolean`           | `true`      | Show/hide language badge in header                                                                |
+| `showCopyButton`  | `boolean`           | `true`      | Show/hide copy-to-clipboard button                                                                |
+| `showLineNumbers` | `boolean`           | `false`     | Show/hide line numbers                                                                            |
 
-### Other Props
+## Sticky Header Props
 
-| Prop        | Type                     | Description                    |
-| ----------- | ------------------------ | ------------------------------ |
-| `style`     | `CSSProperties`          | Additional container styles    |
-| `className` | `string`                 | Additional CSS class           |
-| `onError`   | `(error: Error) => void` | Callback for file/url failures |
+| Prop           | Type      | Default | Description                                                                  |
+| -------------- | --------- | ------- | ---------------------------------------------------------------------------- |
+| `stickyHeader` | `boolean` | `false` | Pin header on scroll. Uses `overflow: clip` internally for reliable behavior |
+| `stickyTop`    | `number`  | `0`     | Offset from viewport top in pixels (useful for fixed navbars)                |
 
-### TypeScript Type
+→ See [Sticky Headers guide](/guide/sticky-headers) for details on the `overflow: clip` approach.
+
+## Color Props
+
+| Prop              | Type     | Default       | Description                         |
+| ----------------- | -------- | ------------- | ----------------------------------- |
+| `headerColor`     | `string` | Theme default | Override header background color    |
+| `backgroundColor` | `string` | Theme default | Override code area background color |
+
+→ See [Themes guide](/guide/themes) for color presets and examples.
+
+## Other Props
+
+| Prop        | Type                     | Description                                |
+| ----------- | ------------------------ | ------------------------------------------ |
+| `style`     | `CSSProperties`          | Additional inline styles on the container  |
+| `className` | `string`                 | Additional CSS class on the container      |
+| `onError`   | `(error: Error) => void` | Callback for `file`/`url` loading failures |
+
+## TypeScript Type
 
 ```typescript
+import type { CSSProperties } from "react";
+
 type BxpCodeProps = {
   code?: string;
   file?: File;
@@ -76,89 +97,35 @@ type BxpCodeProps = {
 };
 ```
 
----
+## Usage Examples
 
-## BxpCodeTabs
+### Minimal
 
-### Tab Object (`BxpCodeTab`)
-
-Each item in the `tabs` array:
-
-| Field      | Type     | Required | Description                                        |
-| ---------- | -------- | -------- | -------------------------------------------------- |
-| `lang`     | `string` | **Yes**  | Language identifier (lowercased internally)        |
-| `label`    | `string` | No       | Tab display label (defaults to capitalized `lang`) |
-| `code`     | `string` | No       | Code string (use this OR `file` / `url`)           |
-| `file`     | `File`   | No       | File object from `<input type="file">`             |
-| `url`      | `string` | No       | URL to fetch code from                             |
-| `fileName` | `string` | No       | Display name (auto-detected from `file` / `url`)   |
-
-### Component Props (`BxpCodeTabsProps`)
-
-| Prop                 | Type                     | Default       | Description                        |
-| -------------------- | ------------------------ | ------------- | ---------------------------------- |
-| `tabs`               | `BxpCodeTab[]`           | —             | **Required.** Array of tab configs |
-| `theme`              | `"dark" \| "light"`      | `"dark"`      | Color theme                        |
-| `showLineNumbers`    | `boolean`                | `true`        | Show/hide line numbers             |
-| `showCopyButton`     | `boolean`                | `true`        | Show/hide hover copy button        |
-| `showHeader`         | `boolean`                | `true`        | Show/hide the tab bar entirely     |
-| `stickyHeader`       | `boolean`                | `false`       | Pin tab bar on scroll              |
-| `stickyTop`          | `number`                 | `0`           | Sticky offset from top (pixels)    |
-| `defaultTab`         | `number`                 | `0`           | Initially active tab index         |
-| `headerColor`        | `string`                 | Theme default | Tab bar background color           |
-| `backgroundColor`    | `string`                 | Theme default | Code area background color         |
-| `borderColor`        | `string`                 | Theme default | Container & header border color    |
-| `tabActiveColor`     | `string`                 | Theme default | Active tab background color        |
-| `tabActiveTextColor` | `string`                 | Theme default | Active tab text color              |
-| `tabTextColor`       | `string`                 | Theme default | Inactive tab text color            |
-| `tabIndicatorColor`  | `string`                 | `#e06b74`     | Active tab bottom indicator color  |
-| `copyButtonColor`    | `string`                 | Theme default | Copy button background color       |
-| `lineNumberColor`    | `string`                 | Theme default | Line number gutter text color      |
-| `style`              | `CSSProperties`          | —             | Additional container styles        |
-| `className`          | `string`                 | —             | Additional CSS class               |
-| `onError`            | `(error: Error) => void` | —             | Callback for file/url failures     |
-
-### TypeScript Types
-
-```typescript
-type BxpCodeTab = {
-  lang: string;
-  label?: string;
-  code?: string;
-  file?: File;
-  url?: string;
-  fileName?: string;
-};
-
-type BxpCodeTabsProps = {
-  tabs: BxpCodeTab[];
-  theme?: "dark" | "light";
-  showLineNumbers?: boolean;
-  showCopyButton?: boolean;
-  showHeader?: boolean;
-  stickyHeader?: boolean;
-  stickyTop?: number;
-  defaultTab?: number;
-  headerColor?: string;
-  backgroundColor?: string;
-  borderColor?: string;
-  tabActiveColor?: string;
-  tabActiveTextColor?: string;
-  tabTextColor?: string;
-  tabIndicatorColor?: string;
-  copyButtonColor?: string;
-  lineNumberColor?: string;
-  style?: CSSProperties;
-  className?: string;
-  onError?: (error: Error) => void;
-};
+```tsx
+<BxpCode code={`print("hello")`} lang="python" />
 ```
 
----
+### Full-featured
 
-## Exports
-
-```typescript
-import { BxpCode, BxpCodeTabs } from "bxp-code";
-import type { BxpCodeProps, BxpCodeTabsProps, BxpCodeTab } from "bxp-code";
+```tsx
+<BxpCode
+  code={code}
+  lang="typescript"
+  fileName="server.ts"
+  theme="dark"
+  showHeader
+  showFileName
+  showLang
+  showCopyButton
+  showLineNumbers
+  stickyHeader
+  stickyTop={64}
+  headerColor="#161b22"
+  backgroundColor="#0d1117"
+  style={{ maxHeight: "500px", borderRadius: "12px" }}
+  className="my-code-block"
+  onError={(err) => console.error(err)}
+/>
 ```
+
+→ [BxpCodeTabs API Reference](/api/bxp-code-tabs)

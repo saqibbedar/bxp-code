@@ -1,49 +1,53 @@
+---
+outline: deep
+---
+
 # Customization
 
-Both `BxpCode` and `BxpCodeTabs` provide extensive customization options.
+Both `BxpCode` and `BxpCodeTabs` provide extensive customization options for controlling visibility, colors, and layout.
 
 ## BxpCode
 
 ### Hide the Header
 
 ```tsx
-<BxpCode code="const minimal = true;" lang="javascript" showHeader={false} />
-```
-
-### Hide Language Badge or File Name
-
-```tsx
-<BxpCode code="const x = 1;" lang="typescript" showLang={false} />
-<BxpCode code="const x = 1;" lang="typescript" showFileName={false} />
-```
-
-### Custom Header Color
-
-```tsx
-<BxpCode code="const branded = true;" lang="javascript" headerColor="#1a365d" />
-```
-
-### Custom Background Color
-
-```tsx
 <BxpCode
-  code="const deep = true;"
+  code={`const minimal = true;`}
   lang="javascript"
-  headerColor="#1a1a2e"
-  backgroundColor="#16213e"
+  theme="dark"
+  showHeader={false}
 />
 ```
 
-### Disable Copy Button
+### Hide Specific Header Elements
 
 ```tsx
-<BxpCode code="const noCopy = true;" lang="javascript" showCopyButton={false} />
+{
+  /* Hide language badge only */
+}
+<BxpCode code={code} lang="typescript" showLang={false} />;
+
+{
+  /* Hide file name only */
+}
+<BxpCode code={code} lang="typescript" showFileName={false} />;
+
+{
+  /* Hide copy button only */
+}
+<BxpCode code={code} lang="typescript" showCopyButton={false} />;
 ```
 
-### Disable Line Numbers
+### Custom Header & Background Colors
 
 ```tsx
-<BxpCode code={code} lang="typescript" showLineNumbers={false} />
+<BxpCode
+  code={`const branded = true;`}
+  lang="javascript"
+  theme="dark"
+  headerColor="#1a1a2e"
+  backgroundColor="#16213e"
+/>
 ```
 
 ### Combining Options
@@ -63,7 +67,21 @@ Both `BxpCode` and `BxpCodeTabs` provide extensive customization options.
 />
 ```
 
-## BxpCodeTabs
+### Inline Styles
+
+```tsx
+const style = {
+  borderRadius: "12px",
+  maxWidth: "700px",
+  maxHeight: "400px",
+};
+
+<BxpCode code={code} lang="typescript" theme="dark" style={style} />;
+```
+
+## BxpCodeTabs {#bxpcodetabs}
+
+`BxpCodeTabs` provides color props for every visual element.
 
 ### Hide Tab Bar
 
@@ -83,7 +101,7 @@ Both `BxpCode` and `BxpCodeTabs` provide extensive customization options.
 />
 ```
 
-### Custom Border Color
+### Custom Border
 
 ```tsx
 <BxpCodeTabs
@@ -102,7 +120,7 @@ Both `BxpCode` and `BxpCodeTabs` provide extensive customization options.
   tabIndicatorColor="#0070f3"
   tabs={[
     { lang: "jsx", label: "React", code: `<App />` },
-    { lang: "vue", code: `<template><App /></template>` },
+    { lang: "html", label: "Vue", code: `<template><App /></template>` },
   ]}
 />
 ```
@@ -120,9 +138,37 @@ Both `BxpCode` and `BxpCodeTabs` provide extensive customization options.
   tabTextColor="#6c7086"
   copyButtonColor="rgba(30, 30, 46, 0.9)"
   lineNumberColor="#585b70"
+  showLineNumbers
   tabs={[
     { lang: "rust", code: `fn main() { println!("styled!"); }` },
     { lang: "go", code: `func main() { fmt.Println("styled!") }` },
   ]}
 />
 ```
+
+## Color Props Reference
+
+### BxpCode
+
+| Prop              | Description                |
+| ----------------- | -------------------------- |
+| `headerColor`     | Header background color    |
+| `backgroundColor` | Code area background color |
+
+→ [Full BxpCode props →](/api/)
+
+### BxpCodeTabs
+
+| Prop                 | Description                     |
+| -------------------- | ------------------------------- |
+| `headerColor`        | Tab bar background color        |
+| `backgroundColor`    | Code area background color      |
+| `borderColor`        | Container & header border color |
+| `tabActiveColor`     | Active tab background           |
+| `tabActiveTextColor` | Active tab text color           |
+| `tabTextColor`       | Inactive tab text color         |
+| `tabIndicatorColor`  | Active tab bottom indicator     |
+| `copyButtonColor`    | Copy button background          |
+| `lineNumberColor`    | Line number gutter text         |
+
+→ [Full BxpCodeTabs props →](/api/bxp-code-tabs)

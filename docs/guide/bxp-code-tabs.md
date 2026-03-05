@@ -1,16 +1,29 @@
+---
+outline: deep
+---
+
 # BxpCodeTabs
 
-Display multiple code blocks in a tabbed interface. Each tab can have its own language, label, and input source (code string, file, or URL).
+Display multiple code blocks in a tabbed interface. Each tab can have its own language, label, and input source — code string, file, or URL.
 
 ## Import
 
-```tsx
+::: code-group
+
+```tsx [React (TSX)]
+import { BxpCodeTabs } from "bxp-code";
+import type { BxpCodeTabsProps, BxpCodeTab } from "bxp-code"; // optional
+```
+
+```jsx [React (JSX)]
 import { BxpCodeTabs } from "bxp-code";
 ```
 
+:::
+
 ## Basic Usage
 
-Pass an array of tabs with `lang` (required) and `code`:
+Pass an array of tabs. Each tab requires `lang`; `label` is auto-derived if omitted:
 
 ```tsx
 <BxpCodeTabs
@@ -31,16 +44,17 @@ Pass an array of tabs with `lang` (required) and `code`:
 }`,
     },
   ]}
+  theme="dark"
 />
 ```
 
 ::: info Auto-labels
-When `label` is omitted, it's derived from `lang` with capitalized first letter — e.g. `lang: "typescript"` → tab label **Typescript**.
+When `label` is omitted, it's derived from `lang` with the first letter capitalized — e.g., `lang: "typescript"` → tab label **Typescript**.
 :::
 
 ## Custom Labels
 
-Use `label` for display names that differ from the language:
+Use `label` for display names that differ from the language — useful when multiple tabs share the same language:
 
 ```tsx
 <BxpCodeTabs
@@ -50,15 +64,13 @@ Use `label` for display names that differ from the language:
     { lang: "bash", label: "yarn", code: "yarn add bxp-code" },
     { lang: "bash", label: "bun", code: "bun add bxp-code" },
   ]}
-  showLineNumbers={false}
+  theme="dark"
 />
 ```
 
-This is useful when multiple tabs share the same language but represent different tools, files, or contexts.
-
 ## From URL
 
-Load code from a remote URL in any tab. The default URL below points to this project's own source — you can replace it with any raw URL:
+Load code from a remote URL in any tab:
 
 ```tsx
 <BxpCodeTabs
@@ -79,21 +91,22 @@ export default function Demo() {
       fileName: "App.tsx",
     },
   ]}
+  theme="dark"
   onError={(err) => console.error("URL load failed:", err)}
 />
 ```
 
-Verify the source: [View App.tsx on GitHub](https://github.com/saqibbedar/bxp-code/blob/main/src/App.tsx)
-
 ::: tip
-On refresh the default URL always loads. Users can override it in their own code with any URL that returns plain text.
+Any URL that returns plain text works. Raw GitHub URLs are ideal.
 :::
 
 ## From File Input
 
-Add a file-upload tab that lets users pick a local file:
+Add a file-upload tab dynamically:
 
-```tsx
+::: code-group
+
+```tsx [React (TSX)]
 import { useState } from "react";
 import { BxpCodeTabs } from "bxp-code";
 
@@ -115,7 +128,6 @@ function FileTabsDemo() {
             label: "Inline",
             code: `const sum = (a, b) => a + b;`,
           },
-          // Spread the file tab only when a file is selected
           ...(file
             ? [
                 {
@@ -126,6 +138,7 @@ function FileTabsDemo() {
               ]
             : []),
         ]}
+        theme="dark"
         onError={(err) => console.error("File read failed:", err)}
       />
     </div>
@@ -133,8 +146,50 @@ function FileTabsDemo() {
 }
 ```
 
+```jsx [React (JSX)]
+import { useState } from "react";
+import { BxpCodeTabs } from "bxp-code";
+
+function FileTabsDemo() {
+  const [file, setFile] = useState(null);
+
+  return (
+    <div>
+      <input
+        type="file"
+        accept=".js,.ts,.tsx,.jsx,.py,.html,.css,.json,.go,.rs"
+        onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+      />
+
+      <BxpCodeTabs
+        tabs={[
+          {
+            lang: "javascript",
+            label: "Inline",
+            code: "const sum = (a, b) => a + b;",
+          },
+          ...(file
+            ? [
+                {
+                  lang: file.name.split(".").pop()?.toLowerCase() || "text",
+                  label: file.name,
+                  file: file,
+                },
+              ]
+            : []),
+        ]}
+        theme="dark"
+        onError={(err) => console.error("File read failed:", err)}
+      />
+    </div>
+  );
+}
+```
+
+:::
+
 ::: info
-The file appears as a new tab once uploaded. The language is auto-detected from the file extension. On page refresh the file tab disappears (since `File` objects don't persist).
+The file appears as a new tab once selected. Language is auto-detected from the file extension. On page refresh the file tab disappears since `File` objects don't persist.
 :::
 
 ## Themes
@@ -144,9 +199,7 @@ The file appears as a new tab once uploaded. The language is auto-detected from 
 ```tsx
 <BxpCodeTabs
   theme="dark"
-  tabs={[
-    { lang: "typescript", code: `const theme = "dark";` },
-  ]}
+  tabs={[{ lang: "typescript", code: `const theme = "dark";` }]}
 />
 ```
 
@@ -155,13 +208,11 @@ The file appears as a new tab once uploaded. The language is auto-detected from 
 ```tsx
 <BxpCodeTabs
   theme="light"
-  tabs={[
-    { lang: "typescript", code: `const theme = "light";` },
-  ]}
+  tabs={[{ lang: "typescript", code: `const theme = "light";` }]}
 />
 ```
 
-## Customization
+## Display Options
 
 ### Hide Copy Button
 
@@ -174,7 +225,7 @@ The file appears as a new tab once uploaded. The language is auto-detected from 
 
 ### Hide Tab Bar
 
-When `showHeader` is `false`, only the active tab's content is displayed:
+When `showHeader` is `false`, only the active (or `defaultTab`) tab's content is displayed:
 
 ```tsx
 <BxpCodeTabs
@@ -183,7 +234,21 @@ When `showHeader` is `false`, only the active tab's content is displayed:
 />
 ```
 
-### Custom Colors
+### Default Active Tab
+
+Open a specific tab by default (zero-indexed):
+
+```tsx
+<BxpCodeTabs
+  defaultTab={1}
+  tabs={[
+    { lang: "javascript", code: `console.log("Tab 0")` },
+    { lang: "typescript", code: `console.log("Tab 1 — active by default")` },
+  ]}
+/>
+```
+
+## Color Customization
 
 Full color control over every part of the component:
 
@@ -218,45 +283,39 @@ int main() {
 />
 ```
 
-### Default Active Tab
+See [Customization](/guide/customization) for more color presets.
 
-Open the second tab by default:
+## Sticky Tab Bar
 
-```tsx
-<BxpCodeTabs
-  defaultTab={1}
-  tabs={[
-    { lang: "javascript", code: `console.log("Tab 0")` },
-    { lang: "typescript", code: `console.log("Tab 1 — active by default")` },
-  ]}
-/>
-```
-
-## Sticky Header
-
-Keep the tab bar pinned while scrolling:
+Keep the tab bar pinned while scrolling long content. Uses `overflow: clip` internally for reliable behavior:
 
 ```tsx
+const style = { maxHeight: "400px", overflow: "auto" };
+
 <BxpCodeTabs
   stickyHeader
-  stickyTop={64} // offset for a fixed navbar
-  style={{ maxHeight: "400px", overflow: "auto" }}
+  stickyTop={64}
+  style={style}
   tabs={[
-    { lang: "typescript", code: longCodeString },
-    { lang: "python", code: longPythonCode },
+    { lang: "typescript", code: longTsCode },
+    { lang: "python", code: longPyCode },
   ]}
-/>
+/>;
 ```
+
+See [Sticky Headers](/guide/sticky-headers) for details.
 
 ## Tab Type Reference
 
-Each tab object has these fields:
+Each tab object accepts these fields:
 
-| Field      | Type     | Required | Description                                                |
-| ---------- | -------- | -------- | ---------------------------------------------------------- |
-| `lang`     | `string` | **Yes**  | Language for highlighting (lowercased internally)          |
-| `label`    | `string` | No       | Tab display text (defaults to capitalized `lang`)          |
-| `code`     | `string` | No       | Code string (use this OR `file` / `url`)                   |
-| `file`     | `File`   | No       | File object from `<input type="file">`                     |
-| `url`      | `string` | No       | URL to fetch code from                                     |
-| `fileName` | `string` | No       | Display name (auto-detected from `file` / `url` if absent) |
+| Field      | Type     | Required | Description                                       |
+| ---------- | -------- | -------- | ------------------------------------------------- |
+| `lang`     | `string` | **Yes**  | Language for highlighting (lowercased internally) |
+| `label`    | `string` | No       | Tab display text (defaults to capitalized `lang`) |
+| `code`     | `string` | No       | Code string (use this OR `file`/`url`)            |
+| `file`     | `File`   | No       | File object from `<input type="file">`            |
+| `url`      | `string` | No       | URL to fetch code from                            |
+| `fileName` | `string` | No       | Display name (auto-detected from `file`/`url`)    |
+
+→ [Full BxpCodeTabs props table →](/api/bxp-code-tabs)

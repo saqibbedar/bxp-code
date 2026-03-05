@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: BxpCode
-  text: Beautiful Code Snippets
-  tagline: A React component for displaying code with syntax highlighting and Prettier formatting
+  text: Beautiful Code Blocks for React
+  tagline: Drop-in React code blocks with Shiki highlighting, Prettier formatting, and zero config.
   actions:
     - theme: brand
       text: Get Started
@@ -15,21 +15,21 @@ hero:
 
 features:
   - icon: 🎨
-    title: Beautiful Syntax Highlighting
-    details: Powered by Shiki with VS Code-quality themes for stunning code display.
+    title: Shiki Syntax Highlighting
+    details: Accurate, TextMate-grammar-based highlighting for 100+ languages — the same engine VS Code uses.
   - icon: ✨
-    title: Auto Formatting
-    details: Built-in Prettier integration ensures consistent, beautiful code style.
+    title: Prettier Auto-Formatting
+    details: Built-in Prettier integration formats code on render, so even pasted snippets look clean.
+  - icon: 📦
+    title: Two Components, One Library
+    details: BxpCode for single blocks, BxpCodeTabs for multi-tab containers — both fully typed.
   - icon: 📋
-    title: Copy Button
-    details: One-click code copying with visual feedback for better UX.
+    title: Copy to Clipboard
+    details: One-click copy with visual feedback. Works for every tab in BxpCodeTabs too.
   - icon: 📌
     title: Sticky Headers
-    details: Keep file info visible while scrolling through long code blocks.
-  - icon: 🌙
-    title: Dark & Light Themes
-    details: Built-in themes that match modern design aesthetics.
+    details: Pin file names and tab bars while scrolling long code blocks. Uses overflow clip for reliable behavior.
   - icon: 🎛️
     title: Fully Customizable
-    details: Configure colors, visibility, and behavior to match your app.
+    details: Dark & light themes out of the box. Override every color — header, background, tabs, borders, and more.
 ---
