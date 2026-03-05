@@ -2,11 +2,16 @@
  * CoverPage component - Landing page hero and features for bxp-code.
  */
 
+import { useEffect } from "react";
 import { BxpCode } from "../../lib/BxpCode";
 import { BxpCodeTabs } from "../../lib/BxpCodeTabs";
 import { Link } from "react-router-dom";
 
 const CoverPage = () => {
+  useEffect(() => {
+    // scroll to when navigating from header link
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
     <main style={styles.main}>
       {/* Hero Section */}

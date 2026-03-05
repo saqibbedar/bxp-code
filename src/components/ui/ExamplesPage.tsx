@@ -36,19 +36,12 @@ const ExamplesPage = () => {
 
   useEffect(() => {
     // scroll to when navigating from header link
-    const hash = window.location.hash;
-    if (hash === "#examples") {
-      setTimeout(() => {
-        const el = document.querySelector(hash);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }, 100);
-    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   return (
     <main style={styles.main}>
+      <title>BxpCode Playground | Examples</title>
       {/* Page Header */}
       <section style={styles.pageHeader}>
         <h1 style={styles.pageTitle}>Interactive Examples</h1>
